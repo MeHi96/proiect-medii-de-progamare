@@ -1,0 +1,76 @@
+﻿@model IEnumerable<travelling.agency.Models.Vacation>
+
+@{
+    if (User.IsInRole("agency"))
+    {
+        ViewData["Title"] = "Your Vacations Offers";
+    }
+    if (User.IsInRole("client"))
+    {
+        ViewData["Title"] = "Vacations Offers";
+    }
+}
+
+<h1>Index</h1>
+
+<p>
+    @if (User.IsInRole("agency"))
+    {
+        <a asp-action="Create">New Vacation Offer</a>
+    }
+   
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.startDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.endDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.startDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.endDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination.DestinationId)
+            </td>
+            <td>
+                 @if (User.IsInRole("agency")) {
+                    <a asp-action="Edit" asp-route-id="@item.VacationId">Edit | </a> 
+                 }
+                <a asp-action="Details" asp-route-id="@item.VacationId">Details</a>
+                 @if (User.IsInRole("agency")) {
+                    <a asp-action="Delete" asp-route-id="@item.VacationId"> | Delete</a>
+                 }
+                 @if (User.IsInRole("client")) {
+                    <a asp-action="BookVacation" asp-route-id="@item.VacationId"> | Book Vacation</a>
+                 }
+                    @if (User.IsInRole("client"))
+                    {
+                        <a id="fav" asp-action="addToFavorite" asp-route-id="@item.VacationId">Add to Favorite </a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@await Component.InvokeAsync("NToastNotify")

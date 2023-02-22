@@ -1,0 +1,89 @@
+﻿@model IEnumerable<travelling.agency.Models.Bookings>
+
+@{
+    ViewData["Title"] = "Your Bookings";
+}
+
+<h1>Bookings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacation.Destination.country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacation.Destination.city)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacation.startDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacation.endDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vacation.price)
+            </th>
+            @if (User.IsInRole("agency"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.IdentityUser.Email)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Accepted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Vacation.Destination.country)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacation.Destination.city)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacation.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacation.endDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacation.price)
+                </td>
+                @if (User.IsInRole("agency"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdentityUser.Email)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Accepted)
+                </td>
+            <td>
+                    @if (User.IsInRole("client"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.BookingsId">Edit | </a> 
+                    }
+                     <a asp-action="Details" asp-route-id="@item.BookingsId">Details</a>
+                    @if (User.IsInRole("client"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.BookingsId"> | Delete</a>
+                    }
+                    @if (User.IsInRole("agency"))
+                    {
+                        <a style="color:green;" asp-action="Accept" asp-route-id="@item.BookingsId"> | ACCEPT </a>
+                    }
+                    @if (User.IsInRole("agency"))
+                    {
+                        <a style="color:red;" asp-action="Reject" asp-route-id="@item.BookingsId"> | REJECT</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@await Component.InvokeAsync("NToastNotify")

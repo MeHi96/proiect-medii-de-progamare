@@ -1,0 +1,47 @@
+﻿@model WebApplication1.Models.Favorites
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Favorites</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacation.Destination.country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacation.Destination.country)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacation.Destination.city)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacation.Destination.city)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacation.startDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacation.startDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacation.endDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacation.endDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vacation.price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vacation.price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
